@@ -24,7 +24,7 @@
         </p>
         <div class="hero-actions">
             <a href="{{ url_for('register') }}" class="btn-primary">Create free account</a>
-            <a href="#" class="btn-secondary">See how it works</a>
+            <a href="#" class="btn-secondary" id="demo-btn">See how it works</a>
         </div>
     </div>
     <div class="hero-visual">
@@ -102,5 +102,62 @@
         <a href="{{ url_for('register') }}" class="btn-primary">Create free account</a>
     </div>
 </section>
+
+<!-- Video Modal -->
+<div class="modal-overlay" id="video-modal">
+    <div class="modal-container">
+        <button class="modal-close" id="modal-close">&times;</button>
+        <div class="modal-video-wrapper">
+            <iframe
+                id="modal-video"
+                src=""
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+            </iframe>
+        </div>
+    </div>
+</div>
+
+<script>
+(function() {
+    const modal = document.getElementById('video-modal');
+    const demoBtn = document.getElementById('demo-btn');
+    const closeBtn = document.getElementById('modal-close');
+    const video = document.getElementById('modal-video');
+    const videoUrl = 'https://www.youtube.com/embed/EM9eoWiu8S8?autoplay=1';
+
+    function openModal() {
+        video.src = videoUrl;
+        modal.classList.add('modal-open');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+        video.src = '';
+        modal.classList.remove('modal-open');
+        document.body.style.overflow = '';
+    }
+
+    demoBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        openModal();
+    });
+
+    closeBtn.addEventListener('click', closeModal);
+
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && modal.classList.contains('modal-open')) {
+            closeModal();
+        }
+    });
+})();
+</script>
 
 {% endblock %}
